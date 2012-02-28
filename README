@@ -33,3 +33,7 @@ This mixin attempts to output the proper format for IE7 and 8, as well as regula
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#7FFF8A00,endColorstr=#7FFF8A00);
   zoom: 1;
 }
+
+--Credit
+The brilliant hex conversion comes from the very talented Kilian Valkof at
+http://kilianvalkhof.com/2010/css-xhtml/how-to-use-rgba-in-ie/
