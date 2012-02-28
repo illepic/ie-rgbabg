@@ -1,0 +1,25 @@
+// MIXIN: rgba backgrounds for all browsers
+// pass in each rgba values separately and the IE uglies are calculated and spit out
+// Lots of thanks to source at: http://kilianvalkhof.com/2010/css-xhtml/how-to-use-rgba-in-ie/
+.mixin--rgbabg(@r, @g, @b, @a){
+  @rgba: rgba(@r,@g,@b,@a);
+  @rgb: rgb(@r,@g,@b);
+
+  @r2: ~`Math.min(Math.max(0,parseInt("@{r}")),255)`;
+  @hexr: ~`"0123456789ABCDEF".charAt(("@{r2}"-"@{r2}"%16)/16) + "0123456789ABCDEF".charAt("@{r2}"%16)`;
+
+  @g2: ~`Math.min(Math.max(0,parseInt("@{g}")),255)`;
+  @hexg: ~`"0123456789ABCDEF".charAt(("@{g2}"-"@{g2}"%16)/16) + "0123456789ABCDEF".charAt("@{g2}"%16)`;
+
+  @b2: ~`Math.min(Math.max(0,parseInt("@{b}")),255)`;
+  @hexb: ~`"0123456789ABCDEF".charAt(("@{b2}"-"@{b2}"%16)/16) + "0123456789ABCDEF".charAt("@{b2}"%16)`;
+
+  @a2: ~`Math.min(Math.max(0,parseInt("@{a}"*255)),255)`;
+  @hexa: ~`"0123456789ABCDEF".charAt(("@{a2}"-"@{a2}"%16)/16) + "0123456789ABCDEF".charAt("@{a2}"%16)`;
+
+  background-color: rgba(@r,@g,@b,@a);
+
+  -ms-filter:~"progid:DXImageTransform.Microsoft.gradient(startColorstr=#@{hexa}@{hexr}@{hexg}@{hexb},endColorstr=#@{hexa}@{hexr}@{hexg}@{hexb})";
+  filter:~"progid:DXImageTransform.Microsoft.gradient(startColorstr=#@{hexa}@{hexr}@{hexg}@{hexb},endColorstr=#@{hexa}@{hexr}@{hexg}@{hexb})";
+  zoom: 1;
+}
