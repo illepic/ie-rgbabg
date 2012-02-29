@@ -10,9 +10,10 @@ Or just copy the contents out of ie-rgbabg.less and paste it right into your les
 
 Usage
 ---------------
-ie-rgbab.less gives you a new mixin:
+ie-rgbab.less gives you two new mixins:
 
     .mixin--rgbabg(@r, @g, @b, @a);
+    .mixin--rgbabg-string(rgba(255,255,255.1));
 
 The arguments are self explanatory. If you would normally set a background like so:
 
@@ -24,6 +25,12 @@ You would now instead set your background like so:
 
     .selector{
       .mixin--rgbabg(255,138,0,.5);
+    }
+
+or instead, like so:
+
+    .selector{
+    	.mixin--rgbabg-string(255,138,0,.5);
     }
 
 Output
