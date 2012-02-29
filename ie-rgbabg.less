@@ -1,5 +1,6 @@
 // MIXIN: rgba backgrounds for all browsers
 // pass in each rgba values separately and the IE uglies are calculated and spit out
+// Use like so: .mixin--rgbabg(243,123,77,.1);
 // Lots of thanks to source at: http://kilianvalkhof.com/2010/css-xhtml/how-to-use-rgba-in-ie/
 .mixin--rgbabg(@r, @g, @b, @a){
   @rgba: rgba(@r,@g,@b,@a);
@@ -18,6 +19,38 @@
   @hexa: ~`"0123456789ABCDEF".charAt(("@{a2}"-"@{a2}"%16)/16) + "0123456789ABCDEF".charAt("@{a2}"%16)`;
 
   background-color: rgba(@r,@g,@b,@a);
+
+  -ms-filter:~"progid:DXImageTransform.Microsoft.gradient(startColorstr=#@{hexa}@{hexr}@{hexg}@{hexb},endColorstr=#@{hexa}@{hexr}@{hexg}@{hexb})";
+  filter:~"progid:DXImageTransform.Microsoft.gradient(startColorstr=#@{hexa}@{hexr}@{hexg}@{hexb},endColorstr=#@{hexa}@{hexr}@{hexg}@{hexb})";
+  zoom: 1;
+}
+
+// This will be more elegant in LESS 1.4
+// Use like so: .mixin--rgbabg-string(rgba(243,123,77,.1));
+.mixin--rgbabg-string(@rgba){
+  @pos1:~`"@{rgba}".indexOf(",")`;
+  @red:~`"@{rgba}".substring("@{rgba}".indexOf("(")+1,"@{pos1}")`;
+  @pos2:~`"@{rgba}".indexOf(",",parseInt("@{pos1}")+1)`;
+  @green:~`"@{rgba}".substring(parseInt("@{pos1}")+2,"@{pos2}")`;
+  @pos3:~`"@{rgba}".indexOf(",",parseInt("@{pos2}")+1)`;
+  @blue:~`"@{rgba}".substring(parseInt("@{pos2}")+2,"@{pos3}")`;
+  @alpha:~`"@{rgba}".substring(parseInt("@{pos3}")+2,"@{rgba}".indexOf(")"))`;
+
+  //content: ~`"@{rgba}" + "!" + "@{red}" + "!" + "@{pos1}" + "!" + "@{pos2}" + "!" + "@{green}" + "!" + "@{blue}" + "!" + "@{alpha}"`;
+  //copied from above
+  @r2: ~`Math.min(Math.max(0,parseInt("@{red}")),255)`;
+  @hexr: ~`"0123456789ABCDEF".charAt(("@{r2}"-"@{r2}"%16)/16) + "0123456789ABCDEF".charAt("@{r2}"%16)`;
+
+  @g2: ~`Math.min(Math.max(0,parseInt("@{green}")),255)`;
+  @hexg: ~`"0123456789ABCDEF".charAt(("@{g2}"-"@{g2}"%16)/16) + "0123456789ABCDEF".charAt("@{g2}"%16)`;
+
+  @b2: ~`Math.min(Math.max(0,parseInt("@{blue}")),255)`;
+  @hexb: ~`"0123456789ABCDEF".charAt(("@{b2}"-"@{b2}"%16)/16) + "0123456789ABCDEF".charAt("@{b2}"%16)`;
+
+  @a2: ~`Math.min(Math.max(0,parseInt("@{alpha}"*255)),255)`;
+  @hexa: ~`"0123456789ABCDEF".charAt(("@{a2}"-"@{a2}"%16)/16) + "0123456789ABCDEF".charAt("@{a2}"%16)`;
+
+  background-color: @rgba;
 
   -ms-filter:~"progid:DXImageTransform.Microsoft.gradient(startColorstr=#@{hexa}@{hexr}@{hexg}@{hexb},endColorstr=#@{hexa}@{hexr}@{hexg}@{hexb})";
   filter:~"progid:DXImageTransform.Microsoft.gradient(startColorstr=#@{hexa}@{hexr}@{hexg}@{hexb},endColorstr=#@{hexa}@{hexr}@{hexg}@{hexb})";
